@@ -1682,9 +1682,12 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
       console.log(service.serviceType);
       if (service.serviceType === 'virtualService') {
         console.log('checkin');
-        this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-          this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-        });
+        // this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
+        //   this.collectRequiredinfo(current_provider['id'], current_provider['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
+        // });
+
+        this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
+
 
       } else {
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');

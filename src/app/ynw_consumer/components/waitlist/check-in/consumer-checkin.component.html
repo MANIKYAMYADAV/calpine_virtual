@@ -6,7 +6,8 @@
                     <a class="pull-left back-btn mgn-up-5" (click)="goBack('back')"><i class="fa fa-arrow-left"></i></a>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
-                    <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'" [accountId]="businessId" [customId]="customId"></app-header>
+                    <app-header *ngIf="sharedFunctionobj.checkLogin()" [includedfrom]="'checkin'"
+                        [accountId]="businessId" [customId]="customId"></app-header>
                 </div>
             </div>
             <div class="pad-10 d-flex flex-column-fluid hf-panel-body">
@@ -26,7 +27,35 @@
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
                                                     data-wizard-type="step">
                                                     <div class="wizard-label">
-                                                        <div class="step-icon">1</div>
+                                                        <!-- <div class="step-icon">1</div> -->
+                                                        <div class="step-icon">{{(questionnaireList.labels &&
+                                                            questionnaireList.labels.length > 0) ? 3 : 1}}</div>
+                                                        <h3 class="wizard-title mgn-lt-15">Patient Information</h3>
+                                                    </div>
+                                                    <span class="svg-icon svg-icon-xl wizard-arrow">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                                                            height="24px" viewBox="0 0 24 24" version="1.1">
+                                                            <g stroke="none" stroke-width="1" fill="none"
+                                                                fill-rule="evenodd">
+                                                                <polygon points="0 0 24 0 24 24 0 24" />
+                                                                <rect fill="#000000" opacity="0.3"
+                                                                    transform="translate(12.000000, 12.000000) rotate(-90.000000) translate(-12.000000, -12.000000) "
+                                                                    x="11" y="5" width="2" height="14" rx="1" />
+                                                                <path
+                                                                    d="M9.70710318,15.7071045 C9.31657888,16.0976288 8.68341391,16.0976288 8.29288961,15.7071045 C7.90236532,15.3165802 7.90236532,14.6834152 8.29288961,14.2928909 L14.2928896,8.29289093 C14.6714686,7.914312 15.281055,7.90106637 15.675721,8.26284357 L21.675721,13.7628436 C22.08284,14.136036 22.1103429,14.7686034 21.7371505,15.1757223 C21.3639581,15.5828413 20.7313908,15.6103443 20.3242718,15.2371519 L15.0300721,10.3841355 L9.70710318,15.7071045 Z"
+                                                                    fill="#000000" fill-rule="nonzero"
+                                                                    transform="translate(14.999999, 11.999997) scale(1, -1) rotate(90.000000) translate(-14.999999, -11.999997) " />
+                                                            </g>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div class="wizard-step tab-selected wizard-mgn-30"
+                                                    data-wizard-type="step" [class.tab-selected]="bookStep>=2">
+                                                    <div class="wizard-label">
+                                                        <!-- <div class="step-icon">2</div> -->
+                                                        <div class="step-icon">{{(questionnaireList.labels &&
+                                                            questionnaireList.labels.length > 0) ? 3 : 2}}</div>
                                                         <h3 class="wizard-title mgn-lt-15">Booking Window</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow">
@@ -48,10 +77,10 @@
                                                     </span>
                                                 </div>
                                                 <div class="wizard-step tab-selected wizard-mgn-30"
-                                                    data-wizard-type="step" [class.tab-selected]="bookStep>=2"
+                                                    data-wizard-type="step" [class.tab-selected]="bookStep>=3"
                                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">
                                                     <div class="wizard-label">
-                                                        <div class="step-icon">2</div>
+                                                        <div class="step-icon">3</div>
                                                         <h3 class="wizard-title mgn-lt-15">More Info</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow">
@@ -76,7 +105,7 @@
                                                     [class.tab-selected]="bookStep==3">
                                                     <div class="wizard-label">
                                                         <div class="step-icon">{{(questionnaireList.labels &&
-                                                            questionnaireList.labels.length > 0) ? 3 : 2}}</div>
+                                                            questionnaireList.labels.length > 0) ? 3 : 3}}</div>
                                                         <h3 class="wizard-title mgn-lt-15">Confirm</h3>
                                                     </div>
                                                     <span class="svg-icon svg-icon-xl wizard-arrow last">
@@ -101,6 +130,7 @@
                                         </div>
                                         <div class="booking-img"></div>
                                     </div>
+
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
@@ -181,8 +211,611 @@
                                                                         *ngIf="sel_ser_det.preInfoEnabled">
                                                                         <div class="preinfo-title">
                                                                             {{sel_ser_det.preInfoTitle}}</div>
-                                                                        <div>{{(readMore) ? sel_ser_det.preInfoText : sel_ser_det.preInfoText | slice:0:200}}
-                                                                            <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right" (click)="showText()" *ngIf="sel_ser_det.preInfoText.length > 200"> {{(readMore) ? 'less': 'more'}}</a>
+                                                                        <div>{{(readMore) ? sel_ser_det.preInfoText :
+                                                                            sel_ser_det.preInfoText | slice:0:200}}
+                                                                            <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
+                                                                                (click)="showText()"
+                                                                                *ngIf="sel_ser_det.preInfoText.length > 200">
+                                                                                {{(readMore) ? 'less': 'more'}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
+                                                    <form [formGroup]="virtualForm"
+                                                        class="login-form custom-login-form consumer-join-component virtual-fields"
+                                                        [ngClass]="theme?theme:''" novalidate   *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                        <!-- <div class="mat-dialog-title">
+                                                            <div class="title" style="font-size: 16px !important;">
+                                                                {{consumer_label| capitalizeFirst }} Information </div>
+                                                            <button mat-dialog-close
+                                                                class="modal_close cust-logpage-close" tabindex="-1"
+                                                                *ngIf="hideLanguages">
+                                                                <i class="fa fa-window-close" aria-hidden="true"
+                                                                    style="margin-top: 10px !important;"></i>
+                                                            </button>
+                                                        </div> -->
+                                                        <!-- step 1 for mobile number entering  *ngIf="!api_loading" -->
+
+                                                        <div class="cust-loginpge-color">
+                                                            <div class="mat-dialog-content"
+                                                                style="overflow: auto !important;">
+                                                                <div *ngIf="hideLanguages">
+                                                                    <!-- <div class="">
+                        <label class="col-form-label" for="name">Service Provider Name : </label>
+                        <span> {{ provider }}</span>
+                </div>
+                <div class="">
+                        <label class="col-form-label" for="name">Consultation Request : </label>
+                        <span> {{ serviceDetails.name }} </span>
+                </div> -->
+
+                                                                    <div class="mgn-up-10 ">
+                                                                        <label class="col-form-label"
+                                                                            for="name">Consultation For </label>
+
+
+                                                                        <br />
+                                                                        <div class="form-group form-inline">
+
+                                                                        <!-- <mat-form-field> -->
+                                                                        <mat-radio-group formControlName="serviceFor"
+                                                                            class="mgn-up-5 userGroup m-0 p-2"
+                                                                            (change)="onServiceForChange($event.value)">
+                                                                            <mat-radio-button
+                                                                                [value]="customer_data.id">
+                                                                                {{customer_data.userProfile.firstName}}
+                                                                                {{customer_data.userProfile.lastName}}
+                                                                            </mat-radio-button>
+                                                                            <mat-radio-button [value]="member.user"
+                                                                                *ngFor="let member of familymembers">
+                                                                                {{member.userProfile.firstName}}
+                                                                                {{member.userProfile.lastName}}
+                                                                            </mat-radio-button>
+                                                                            <mat-radio-button value="new_member">Someone
+                                                                                else</mat-radio-button>
+                                                                        </mat-radio-group>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mgn-up-10 mgn-bt-10"
+                                                                        style="font-size: 0.75rem !important;">
+                                                                        Please provide basic information about the
+                                                                        <span>{{consumer_label}}</span>
+                                                                    </div>
+
+                                                                    <div class="form-group"
+                                                                        *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                                                                        <label class="col-form-label"
+                                                                            for="firstName">First Name <span
+                                                                                class="red">*</span></label>
+                                                                        <input placeholder="Enter your first name"
+                                                                            class="form-control"
+                                                                            formControlName="firstName">
+                                                                    </div>
+                                                                    <div class="form-group "
+                                                                        *ngIf="virtualForm.get('serviceFor').value==='new_member'">
+                                                                        <label class="col-form-label"
+                                                                            for="lastName">Last Name <span
+                                                                                class="red">*</span></label>
+                                                                        <input placeholder="Enter your last name"
+                                                                            class="form-control"
+                                                                            formControlName="lastName">
+                                                                    </div>
+                                                                    <!-- <div class="form-group col-xs-12 dob no-padding mgn-up-20">
+                    <label class="col-form-label" for="dob">Date of Birth <span class="red">*</span></label>
+                    <br />
+
+                  <select [(ngModel)]="selectedDate" formControlName="date">
+                        <option value="dd">dd</option>
+                            <option *ngFor="let date of dates" [value]="date">
+                                {{date}}
+                            </option>
+                        </select>
+                    
+                    &nbsp;
+                    <select [(ngModel)]="selectedMonth" formControlName="month">
+                        <option value="mm">mm</option>
+                        <option *ngFor="let month of months" [value]="month.value">
+                            {{month.name}}
+                        </option>
+                    </select>
+                    &nbsp;
+                    <select [(ngModel)]="selectedYear" formControlName="year">
+                            <option value="yyyy">yyyy</option>
+                        <option *ngFor="let year of years" [value]="year">
+                            {{year}}
+                        </option>
+                    </select>
+                
+                </div> -->
+
+
+                                                                    <!-- <mat-label for="gender">{{gender_cap}} <span class="red">*</span></mat-label> -->
+                                                                    <div class="form-group">
+                                                                        <label class="col-form-label"
+                                                                            for="gender">{{gender_cap}} <span
+                                                                                class="red">*</span></label>
+                                                                        <br />
+                                                                        <mat-radio-group formControlName="gender" class=" m-0 p-2">
+                                                                            <mat-radio-button value="male">Male
+                                                                            </mat-radio-button>
+                                                                            <mat-radio-button value="female">Female
+                                                                            </mat-radio-button>
+                                                                            <mat-radio-button value="other">Other
+                                                                            </mat-radio-button>
+                                                                        </mat-radio-group>
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'gender')"
+                                                                            errorMsg="Please select the gender.">
+                                                                        </app-field-error-display>
+                                                                    </div>
+
+                                                                    <div class="form-group ">
+                                                                        <label class="col-form-label"
+                                                                            for="lastName">Age(in years)<span
+                                                                                class="red">*</span></label><br>
+                                                                        <input type="text" min="1" max="150"
+                                                                            class="form-control vt_dt no-padding mgn-up-5"
+                                                                            formControlName="age" style="width:50%"
+                                                                            (keypress)=isNumeric($event)>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-between;">
+                                                                            <app-field-error-display
+                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'age') "
+                                                                                [errorMsgs]="fed_service.getErrorMessage(virtualForm,'age',
+                  {
+                    'required' : 'Age is required',
+                    'min' : 'Minimum age required is 0',
+                    'max' : 'Maximum age is 150'
+                   
+                  })">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <!-- Signin Password -->
+                                                                    <div class="form-group pwd"
+                                                                        *ngIf="countryCode=='+91'">
+                                                                        <!-- <mat-form-field> -->
+                                                                        <label for="pincode"
+                                                                            class="col-form-label">Residing Pincode in
+                                                                            India <span class="red">*</span></label>
+                                                                        <input type="text" placeholder="xxxxxx"
+                                                                            class="form-control vt_dt no-padding mgn-up-5"
+                                                                            id="location" formControlName="pincode"
+                                                                            (keypress)="isNumeric($event)"
+                                                                            (keyup)="showLocations($event)"
+                                                                            style="width:50%">
+                                                                        <!-- </mat-form-field> -->
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-between;">
+                                                                            <app-field-error-display
+                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'pincode')"
+                                                                                errorMsg="Pincode is required">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                        <app-common-innerloading-spinner
+                                                                            *ngIf="loading">
+                                                                        </app-common-innerloading-spinner>
+                                                                        <div *ngIf="!loading && locations"
+                                                                            class="mgn-up-10">
+                                                                            <mat-radio-group
+                                                                                aria-label="Select your location"
+                                                                                class="mgn-up-5"
+                                                                                formControlName='location'>
+                                                                                <mat-radio-button
+                                                                                    *ngFor="let location of locations.PostOffice"
+                                                                                    [value]="location">
+                                                                                    {{location.Name}},
+                                                                                    {{location.State}}
+                                                                                </mat-radio-button>
+                                                                            </mat-radio-group>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group "
+                                                                        *ngIf="countryCode!=='+91'">
+                                                                        <label class="col-form-label"
+                                                                            for="lastName">Location <span
+                                                                                class="red">*</span></label>
+                                                                        <input placeholder="Enter your location"
+                                                                            class="form-control"
+                                                                            formControlName="localarea">
+                                                                    </div>
+                                                                    <div class="form-group" *ngIf="countryCode!=='+91'">
+                                                                        <label class="col-form-label" for="firstName">
+                                                                            Residing State<span
+                                                                                class="red">*</span></label>
+                                                                        <input placeholder="Enter your state"
+                                                                            class="form-control"
+                                                                            formControlName="state">
+                                                                    </div>
+
+                                                                    <!-- Signin Password -->
+                                                                    <div class="form-group" id="plng"
+                                                                        *ngIf="lngknown==='yes'">
+                                                                        <!-- <mat-form-field> -->
+                                                                        <label class="col-form-label" for="v">Select
+                                                                            your preferred language <span
+                                                                                class="red">*</span></label>
+                                                                        <br />
+                                                                        <mat-radio-group aria-label="Select an option"
+                                                                            (change)="onChange($event)" class="mgn-up-5  m-0 p-2"
+                                                                            formControlName="islanguage">
+                                                                            <mat-radio-button value="yes">English
+                                                                            </mat-radio-button>
+                                                                            <mat-radio-button value="no">Other Languages
+                                                                            </mat-radio-button>
+                                                                        </mat-radio-group>
+                                                                        <!-- </mat-form-field> -->
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-between;">
+                                                                            <app-field-error-display
+                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                                                                errorMsg="please choose one">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div
+                                                                    *ngIf="hideLanguages && virtualForm.get('preferredLanguage').value.length >0 && lngknown==='no'">
+                                                                    <label class="col-form-label"
+                                                                        for="preferredLanguage">{{virtualForm.get('preferredLanguage').value.length
+                                                                        >1?'Your preferred languages': 'Your preferred
+                                                                        language'}}
+                                                                    </label><br />
+
+                                                                    <div class="col-form-label"><span
+                                                                            style="word-wrap: break-word;">{{virtualForm.get('preferredLanguage').value}}</span>
+
+                                                                        <span class="pull-right"
+                                                                            (click)="editLanguage()"><i
+                                                                                class="fa fa-edit fa-1x"
+                                                                                style="font-size: large;"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="!hideLanguages" class="form-group">
+                                                                    <div class="form-group form-inline" id="plng"
+                                                                        *ngIf="iseditLanguage">
+                                                                        <!-- <mat-form-field> -->
+                                                                        <label class="col-form-label" for="v">Select
+                                                                            your preferred language <span
+                                                                                class="red">*</span></label>
+                                                                        <br />
+                                                                        <mat-radio-group aria-label="Select an option"
+                                                                            (change)="onChange($event)" class="mgn-up-5"
+                                                                            formControlName="islanguage">
+                                                                            <mat-radio-button value="yes">English
+                                                                            </mat-radio-button>
+                                                                            <mat-radio-button value="no">Other Languages
+                                                                            </mat-radio-button>
+                                                                        </mat-radio-group>
+                                                                        <!-- </mat-form-field> -->
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-between;">
+                                                                            <app-field-error-display
+                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'islanguage') "
+                                                                                errorMsg="please choose one">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <!-- <mat-form-field> -->
+
+                                                                        <label *ngIf="lngknown==='no'"
+                                                                            class="col-form-label"
+                                                                            for="preferredLanguage">Choose your
+                                                                            preferred languages
+                                                                            <span class="red">*</span></label>
+                                                                        <!-- <mat-form-field>
+                    <mat-select multiple  class="select-box" id="preferredLanguage" formControlName="preferredLanguage">
+                            <mat-option *ngFor="let language of languages"
+                                [value]="language" >
+                                {{language}}</mat-option>
+                        </mat-select>
+                </mat-form-field> -->
+                                                                        <div class="form-group form-inline">
+                                                                            <div class="languagesouter"
+                                                                                *ngIf="languages.length >0 && lngknown==='no'">
+                                                                                <div *ngFor="let lang of languages">
+                                                                                    <mat-checkbox
+                                                                                        style="padding-left: 10px;"
+                                                                                        (change)="langSel(lang)"
+                                                                                        [checked]="checklangExists(lang)">
+                                                                                        {{lang}}</mat-checkbox>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="actiondiv col-md-12"
+                                                                                style="margin-top: 15px;display: inline-flex;">
+                                                                                <!-- <button type="button" (click)="cancel()" class="cs-btn bt2"
+                            [disabled]="disableButton">Cancel</button>&nbsp; -->
+                                                                                <button (click)="saveLanguages()"
+                                                                                    type="button" mat-button
+                                                                                    class="cs-btn bt1"
+                                                                                    [disabled]="disableButton">Ok</button>&nbsp;&nbsp;
+                                                                                <button
+                                                                                    (click)="cancelLanguageSelection()"
+                                                                                    type="button" mat-button
+                                                                                    class="cs-btn bt1">Cancel</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-between;">
+                                                                            <app-field-error-display
+                                                                                [displayError]="fed_service.isFieldValid(virtualForm,'preferredLanguage')"
+                                                                                errorMsg="Language is required">
+                                                                            </app-field-error-display>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <ng-container *ngIf="hideLanguages">
+                                                                    <label class="col-form-label" for="name">Contact
+                                                                        Information </label>
+
+                                                                    <div class="form-level-settings smallfont">
+                                                                        Provide your contact info for alerts,status
+                                                                        updates and for any other booking related
+                                                                        communications
+                                                                    </div>
+                                                                    <!-- <div class="form-group mobile-field" >
+                        <label>Whatsapp #</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="mobPrefix">
+                              <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                            <input type="text" 
+                                class="form-control mobclass " id="whatsappnumber"
+                               formControlName="whatsappnumber"
+                                autocomplete="off" maxlength="10">
+                        </div>
+                
+                  
+                </div> -->
+                                                                    <div class="mgn-up-10 mgn-bt-10">
+                                                                        <label class="col-form-label" for="phone">Phone
+                                                                            # </label>
+                                                                        <br />
+                                                                        {{this.details.userProfile.countryCode}}
+                                                                        {{this.details.userProfile.primaryMobileNo}}
+                                                                    </div>
+                                                                    <div class="col-xs-12 no-padding optional">
+                                                                        <label><i class="fa fa-whatsapp"
+                                                                                style="color:green"></i> Whatsapp
+                                                                            #</label>
+                                                                        <div class="disp-flex">
+                                                                            <div class="form-group no-margin">
+                                                                                <input type="text"
+                                                                                    (keypress)="isNumericSign($event)"
+                                                                                    matInput
+                                                                                    class="form-control input-group-text"
+                                                                                    id="countryCode_whtsap"
+                                                                                    placeholder=""
+                                                                                    formControlName="countryCode_whtsap"
+                                                                                    autocomplete="off" maxlength="5"
+                                                                                    style="width:60px">
+                                                                            </div>
+                                                                            <div class="form-group width-100">
+                                                                                <input type="text"
+                                                                                    (keypress)="isNumeric($event)"
+                                                                                    matInput
+                                                                                    class="form-control text-width"
+                                                                                    id="whatsappnumber"
+                                                                                    formControlName="whatsappnumber"
+                                                                                    autocomplete="off">
+                                                                                <!-- <app-field-error-display
+                                [displayError]="fed_service.isFieldValid(virtualForm,'whatsappnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'whatsappnumber',
+                            {
+                            'minlength' : 'Enter a 10 digit whatsapp number',
+                            'maxlength' : 'Enter a 10 digit whatsapp number',
+                            'pattern' : 'Enter a 10 digit whatsapp number'
+                            })">
+                            </app-field-error-display> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <div class="form-group mobile-field" >
+                        <label>Telegram #</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="mobPrefix">
+                              <i style="font-style: normal;font-size: small;">+91</i></span></div>
+                            <input type="text" 
+                                class="form-control mobclass " id="telegramnumber"
+                               formControlName="telegramnumber"
+                                autocomplete="off" maxlength="10">
+                        </div>
+                
+                </div> -->
+                                                                    <div class=" col-xs-12 no-padding optional">
+                                                                        <label><i class="fa fa-telegram"
+                                                                                style="color:#29b6f6;"></i> Telegram
+                                                                            #</label>
+                                                                        <div class="disp-flex">
+
+                                                                            <div class="form-group no-margin">
+                                                                                <input type="text"
+                                                                                    (keypress)="isNumericSign($event)"
+                                                                                    matInput
+                                                                                    class="form-control input-group-text"
+                                                                                    id="countryCode_telegram"
+                                                                                    placeholder=""
+                                                                                    formControlName="countryCode_telegram"
+                                                                                    autocomplete="off" maxlength="5"
+                                                                                    style="width:60px">
+                                                                            </div>
+                                                                            <div class="form-group width-100">
+                                                                                <input type="text"
+                                                                                    (keypress)="isNumeric($event)"
+                                                                                    matInput
+                                                                                    class="form-control text-width"
+                                                                                    id="telegramnumber"
+                                                                                    formControlName="telegramnumber"
+                                                                                    autocomplete="off">
+                                                                                <!-- <app-field-error-display
+                                [displayError]="fed_service.isFieldValid(virtualForm,'telegramnumber')" [errorMsgs]="fed_service.getErrorMessage(virtualForm,'telegramnumber',
+                            {
+                            'minlength' : 'Enter a 10 digit telegram number',
+                            'maxlength' : 'Enter a 10 digit telegram number',
+                            'pattern' : 'Enter a 10 digit telegram number'
+                            })">
+                            </app-field-error-display> -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group optional">
+                                                                        <label for="email"
+                                                                            class="col-form-label">Email</label>
+                                                                        <input type="email" class="form-control"
+                                                                            formControlName="email" />
+                                                                        <mat-checkbox class="updateemail"
+                                                                            formControlName="updateEmail">Update Email
+                                                                            to 'My Account'</mat-checkbox>
+                                                                        <!-- <mat-form-field>
+                  <input matInput type="email" class="form-control" placeholder="Email(user@xyz.com)*" formControlName="email">
+           </mat-form-field> -->
+                                                                        <app-field-error-display
+                                                                            [displayError]="fed_service.isFieldValid(virtualForm,'email')"
+                                                                            [errorMsgs]="fed_service.getErrorMessage(virtualForm,'email',
+                                          {
+                                            'pattern' : 'Please enter valid email'
+                                          })">
+                                                                        </app-field-error-display>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <!-- <div class="form-group" *ngIf="hideLanguages"
+                                                                    class="mgn-bt-50">
+                                                                    <button
+                                                                        class="cust-logpg-submt mgn-up-20 continue-button"
+                                                                        mat-button (click)="onSubmit(virtualForm.value)"
+                                                                        style="margin-bottom:10%">
+                                                                        <span>Continue</span>
+                                                                    </button>
+                                                                </div> -->
+                                                                <div class="">&nbsp;</div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <!-- <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mgn-up-10"
+                                                    *ngIf="queuejson && queuejson.length == 0 && !api_loading1">
+                                                    No timings available.
+                                                    <span><a class="lnk pointer-cursor action mgn-lt-10"
+                                                            (click)="changeTime()" data-toggle="modal"
+                                                            data-target="#exampleModalCenter">Change Time
+                                                        </a></span>
+                                                </div> -->
+                                                </div>
+
+                                            </div>
+                                            <!-- <div>
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')">
+                                                    Next
+                                                </button>
+                                            </div> -->
+                                            <div
+                                                class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                                <button type="button"
+                                                    class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                    (click)="goToStep('next')"
+                                                    [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                    Next
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
+                                        data-wizard-type="step-content" data-wizard-state="current"
+                                        *ngIf="bookStep >= 2">
+                                        <div class="panel-body no-padding">
+                                            <div
+                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
+                                                <div
+                                                    class="
+                                                    col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
+                                                        *ngIf="this.selectedUserParam && selectedUser">
+                                                        <div class="col-sm-2 col-xs-3 col-md-4 ">
+                                                            <img class="card-img" [src]="getPic(selectedUser)"
+                                                                alt="Profile Pic">
+                                                        </div>
+                                                        <div class="col-sm-10 col-xs-9 col-md-8 no-padding">
+                                                            <div class="">
+                                                                <h6 class="card-title mgn-up-5">
+                                                                    <span
+                                                                        *ngIf="selectedUser.businessName">{{selectedUser.businessName}}</span>
+                                                                    <span
+                                                                        *ngIf="!selectedUser.businessName">{{selectedUser.businessName}}</span>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-bt-10">
+                                                        <div
+                                                            class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 mgn-up-5">
+                                                            {{showCheckinButtonCaption()}} For
+                                                        </div>
+                                                        <div class="col-sm-12 col-xs-12 col-md-12">
+                                                            <div class=""
+                                                                *ngIf="sel_ser || type == 'waitlistreschedule'">
+                                                                <div class="service-icon pull-left"
+                                                                    *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                                    <i class="fa phon-icon"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                                                                    <i class="fa meet-icon"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                                                                    <i class="fa zoom-icon zoom1"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                                                                    <i class="fa jvideo-icon jvideo-icon-m jvideo-icon-mg5"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes  && sel_ser_det.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                                                                    <i class="fa wtsapaud-icon"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'audioService'"></i>
+                                                                    <i class="fa wtsapvid-icon"
+                                                                        *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType === 'videoService'"></i>
+                                                                </div>
+                                                                <h6 class="card-title service mgn-bt-10">
+                                                                    {{sel_ser_det.name}}
+                                                                </h6>
+                                                                <div class="" style="font-size: 1rem"
+                                                                    *ngIf="sel_ser_det.price && type != 'reschedule'">
+                                                                    <p class="module-nomargin line-clamp no-margin"
+                                                                        *ngIf="sel_ser_det.description && !showmoreSpec"
+                                                                        (click)="showSpec()">
+                                                                        {{sel_ser_det.description}}</p>
+                                                                    <p *ngIf="showmoreSpec" (click)="showSpec()">
+                                                                        {{sel_ser_det.description}}</p>
+                                                                </div>
+                                                                <div class="">
+                                                                    <div class="callingmode mgn-lt-10"
+                                                                        *ngIf="sel_ser_det && sel_ser_det.serviceType==='virtualService' && type !== 'waitlistreschedule'">
+                                                                        <div class="mgn-bt-10 mgn-up-5">
+                                                                            <div class=""
+                                                                                *ngFor="let mode of sel_ser_det.virtualCallingModes;let i = index">
+                                                                                <div style="visibility: hidden;">
+                                                                                    {{callingModesDisplayName[mode.callingMode]}}
+                                                                                </div>
+                                                                                <div class="cal-mod-instrct pre-check-title color-grey"
+                                                                                    *ngIf="mode.callingMode">
+                                                                                    {{mode.instructions}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="prenotes mgn-bt-10"
+                                                                        *ngIf="sel_ser_det.preInfoEnabled">
+                                                                        <div class="preinfo-title">
+                                                                            {{sel_ser_det.preInfoTitle}}</div>
+                                                                        <div>{{(readMore) ? sel_ser_det.preInfoText :
+                                                                            sel_ser_det.preInfoText | slice:0:200}}
+                                                                            <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right"
+                                                                                (click)="showText()"
+                                                                                *ngIf="sel_ser_det.preInfoText.length > 200">
+                                                                                {{(readMore) ? 'less': 'more'}}</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -197,13 +830,13 @@
                                                         <div
                                                             class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
                                                             Date/Time
-                                                            <span ><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
-                                                                 (click)="changeTime()" data-toggle="modal"
+                                                            <span><a class="changeitem  pointer-cursor  mgn-rt-20 mgn-bt-10 pull-right "
+                                                                    (click)="changeTime()" data-toggle="modal"
                                                                     data-target="#exampleModalCenter">Change
                                                                 </a></span>
                                                         </div>
-                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding" >
-                                                            <h6 class="card-title serv-time border-style" >
+                                                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
+                                                            <h6 class="card-title serv-time border-style">
                                                                 <span *ngIf="!isFuturedate">Today, </span>
                                                                 <span *ngIf="isFuturedate">{{selectedDate | date:
                                                                     newDateFormat}},
@@ -271,7 +904,8 @@
                                                             <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-bt-5 no-padding"
                                                                 *ngIf="sel_ser_det.serviceType==='virtualService'">
                                                                 Booking
-                                                                For  <!--<a *ngIf="type !== 'waitlistreschedule'"
+                                                                For
+                                                                <!--<a *ngIf="type !== 'waitlistreschedule'"
                                                                     class="changeitem  pointer-cursor  mgn-lt-5 mgn-rt-20 pull-right"
                                                                     (click)="virtualModal()">Change
                                                                 </a> -->
@@ -291,18 +925,19 @@
                                                                         {{wtlst_for_fname | capitalizeFirst}}
                                                                         {{wtlst_for_lname | capitalizeFirst}}
                                                                     </h6>
-                                                                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
-                                                                    Contact Information
-                                                                    <a *ngIf="type !== 'waitlistreschedule'&& sel_ser_det.serviceType==='virtualService'"
-                                                                    class="change-button changeitem pointer-cursor mgn-lt-5 pull-right"
-                                                                    data-toggle="modal"
-                                                                    data-target="#exampleModalCenter"
-                                                                    (click)="handleSideScreen('members')">Change
-                                                                </a>
+                                                                    <div
+                                                                        class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10">
+                                                                        Contact Information
+                                                                        <a *ngIf="type !== 'waitlistreschedule'&& sel_ser_det.serviceType==='virtualService'"
+                                                                            class="change-button changeitem pointer-cursor mgn-lt-5 pull-right"
+                                                                            data-toggle="modal"
+                                                                            data-target="#exampleModalCenter"
+                                                                            (click)="handleSideScreen('members')">Change
+                                                                        </a>
                                                                         <div class="mode-hint mgn-bt-5">
                                                                             The provider will contact you in this
                                                                             number
-                                                                        </div> 
+                                                                        </div>
                                                                     </div>
                                                                     <!-- <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10"
                                                                     *ngIf="sel_ser_det.serviceType==='virtualService'">
@@ -332,7 +967,7 @@
                                                                             {{currentPhone}}</span><a
                                                                             class="mgn-lt-5 lnk pointer-cursor">
                                                                         </a>
-                                                                    
+
                                                                         <!-- <div class="mode-hint mgn-bt-5"
                                                                             *ngIf="(!changePhno || currentPhone == callingModes) && (sel_ser_det && sel_ser_det.virtualCallingModes && (sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'))">
                                                                             The provider will contact you in this
@@ -389,19 +1024,23 @@
                                                                 <span>
                                                                     <mat-chip
                                                                         [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
-                                                                    <a class="lnk action pointer-cursor"
-                                                                        (click)="imagefile1.click();"><input #imagefile1
-                                                                            type="file" accept="/*;capture=camera"
-                                                                            style="display:none;" multiple
-                                                                            (change)="filesSelected($event, 'close')"><i
-                                                                            class="fa fa-paperclip mgn-rt-5"
-                                                                            aria-hidden="true"></i>Upload
-                                                                        File
-                                                                        <!-- <span
+                                                                        <a class="lnk action pointer-cursor"
+                                                                            (click)="imagefile1.click();"><input
+                                                                                #imagefile1 type="file"
+                                                                                accept="/*;capture=camera"
+                                                                                style="display:none;" multiple
+                                                                                (change)="filesSelected($event, 'close')"><i
+                                                                                class="fa fa-paperclip mgn-rt-5"
+                                                                                aria-hidden="true"></i>Upload
+                                                                            File
+                                                                            <!-- <span
                                                                             *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span> -->
-                                                                    </a></mat-chip>
-                                                                    <mat-chip *ngIf="getAttachLength() > 0" class="br-top-left-0 br-bottom-left-0 margin-left-0">
-                                                                        <a class="lnk action pointer-cursor" (click)="viewAttachments()">
+                                                                        </a>
+                                                                    </mat-chip>
+                                                                    <mat-chip *ngIf="getAttachLength() > 0"
+                                                                        class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                        <a class="lnk action pointer-cursor"
+                                                                            (click)="viewAttachments()">
                                                                             View (<span>{{getAttachLength()}}</span>)
                                                                         </a>
                                                                     </mat-chip>
@@ -482,7 +1121,30 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- <div 
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container"> 
+                                               
+                                            </div> -->
                                             <div *ngIf="type != 'waitlistreschedule'"
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                            
+                                            <button type="button"
+                                            class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                            (click)="goToStep('prev')">
+                                            Go Back
+                                            </button>
+                                            <button type="button"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                (click)="goToStep('next')"
+                                                [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                Next
+                                            </button>
+                                        </div>
+                                        
+
+
+                                            <!-- <div *ngIf="type != 'waitlistreschedule'"
                                                 class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
                                                 <button type="button"
                                                     class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
@@ -490,7 +1152,7 @@
                                                     [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
                                                     Next
                                                 </button>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -571,9 +1233,12 @@
                                                                     <!-- [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'" -->
                                                                     <i class="fa phon-icon"
                                                                         *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                                                                    <i class="fa fa-phone" style="font-size: 20px !important; align-self: center; padding-right: 9px;"
+                                                                    <i class="fa fa-phone"
+                                                                        style="font-size: 20px !important; align-self: center; padding-right: 9px;"
                                                                         *ngIf="!(sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'Phone')"></i>
-                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Phone#</div>
+                                                                    <div class="number-caption"
+                                                                        [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                        Phone#</div>
                                                                     <!-- <b>{{countryCode}}
                                                                         {{selected_phone}}</b> -->
                                                                     <div class="codenumber">
@@ -585,7 +1250,9 @@
                                                                         <input
                                                                             class="width100 height40 email-border input-field pull-right"
                                                                             id="newPhone" placeholder="" name="newPhone"
-                                                                            [(ngModel)]="newPhone" autocomplete="off" (keypress)="isNumeric($event)" maxlength="10">
+                                                                            [(ngModel)]="newPhone" autocomplete="off"
+                                                                            (keypress)="isNumeric($event)"
+                                                                            maxlength="10">
                                                                     </div>
                                                                     <!-- <ngx-intl-tel-input
                                                                         style="width: 210px !important;margin-left: auto"
@@ -654,8 +1321,11 @@
                                                                 </div>
                                                                 <div class="mgn-up-5 mgn-lt-10 disp-flex">
                                                                     <!-- [class.mgn-lt-36]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'" -->
-                                                                    <i class="fa fa-envelope" style="font-size: 18px !important; align-self: center; padding-right: 7px;"></i>
-                                                                    <div class="number-caption" [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'"> Email </div>
+                                                                    <i class="fa fa-envelope"
+                                                                        style="font-size: 18px !important; align-self: center; padding-right: 7px;"></i>
+                                                                    <div class="number-caption"
+                                                                        [class.width-input]="sel_ser_det && sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                                                                        Email </div>
                                                                     <!-- <b>{{payEmail}}</b> -->
                                                                     <div class="width-100">
                                                                         <input
@@ -799,8 +1469,9 @@
                                                                             </div>
                                                                             <div class="gal-input">
                                                                                 <!-- <label>{{file.caption}}</label> -->
-                                                                                <input type="text" readonly value="{{file.caption}}">
-                                                                             </div> 
+                                                                                <input type="text" readonly
+                                                                                    value="{{file.caption}}">
+                                                                            </div>
                                                                         </div>
                                                                     </li>
                                                                 </ng-container>
@@ -839,18 +1510,15 @@
                                                         <div class="pull-left brd-round brd-light mgn-up-20">
                                                             <div class="icon-minus pull-left"
                                                                 [class.disable]="disableMinus()"
-                                                                
                                                                 (click)="calculateDate(-1)">
                                                             </div>
                                                             <div class="pull-left chkindt">{{sel_checkindate |
                                                                 date:
                                                                 dateFormat}}</div>
-                                                            <div class="icon-add pull-left"
-                                                                
-                                                                (click)="calculateDate(1)"></div>
+                                                            <div class="icon-add pull-left" (click)="calculateDate(1)">
+                                                            </div>
                                                         </div>
-                                                        <div class="pickerouter caldiv pull-left mgn-up-20"
-                                                            >
+                                                        <div class="pickerouter caldiv pull-left mgn-up-20">
                                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                                             </mat-datepicker-toggle>
                                                             <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
@@ -996,7 +1664,8 @@
                                                     <button type="button"
                                                         class="disp-none btn btn-light-primary font-weight-bold"
                                                         data-dismiss="modal" #closebutton>Cancel</button>
-                                                    <button type="button" class="btn btn-primary font-weight-bold hf-btn"
+                                                    <button type="button"
+                                                        class="btn btn-primary font-weight-bold hf-btn"
                                                         (click)="actionCompleted()">Ok</button>
                                                 </div>
                                                 <div class="error-section" *ngIf="apiError !== ''">
@@ -1039,24 +1708,27 @@
                                                                         *ngIf="sel_ser_det.consumerNoteMandatory">*</span></a>
                                                             </mat-chip>
                                                             <span>
-                                                            <mat-chip
-                                                                [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                                                <mat-chip
+                                                                    [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
                                                                     <a class="lnk action pointer-cursor"
-                                                                    (click)="imagefile1.click();"><input #imagefile1
-                                                                        type="file" accept="/*;capture=camera"
-                                                                        style="display:none;" multiple
-                                                                        (change)="filesSelected($event, 'close')"><i
-                                                                        class="fa fa-paperclip mgn-rt-5"
-                                                                        aria-hidden="true"></i>Upload
-                                                                    File
-                                                                    <!-- <span
+                                                                        (click)="imagefile1.click();"><input #imagefile1
+                                                                            type="file" accept="/*;capture=camera"
+                                                                            style="display:none;" multiple
+                                                                            (change)="filesSelected($event, 'close')"><i
+                                                                            class="fa fa-paperclip mgn-rt-5"
+                                                                            aria-hidden="true"></i>Upload
+                                                                        File
+                                                                        <!-- <span
                                                                         *ngIf="getAttachLength() > 0">&nbsp;({{getAttachLength()}})</span> -->
-                                                                </a></mat-chip>
-                                                            <mat-chip *ngIf="getAttachLength() > 0" class="br-top-left-0 br-bottom-left-0 margin-left-0">
-                                                                <a class="lnk action pointer-cursor" (click)="viewAttachments()">
-                                                                    View (<span>{{getAttachLength()}}</span>)
-                                                                </a>
-                                                            </mat-chip>
+                                                                    </a>
+                                                                </mat-chip>
+                                                                <mat-chip *ngIf="getAttachLength() > 0"
+                                                                    class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                                                    <a class="lnk action pointer-cursor"
+                                                                        (click)="viewAttachments()">
+                                                                        View (<span>{{getAttachLength()}}</span>)
+                                                                    </a>
+                                                                </mat-chip>
                                                             </span>
                                                         </mat-chip-list>
                                                     </div>
@@ -1115,7 +1787,7 @@
                                             <div class="disp-flex">
                                                 <span class="billing-head"
                                                     style="display: flex !important; align-items: center !important;margin-bottom: 5px;">Service</span>
-                                                    <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
+                                                <span class="mgn-up-5-m">&nbsp;:&nbsp;</span>
                                                 <span class="billing-value disp-flex align-items-center">
                                                     <span class="service-icon" style="display: inline-block !important;"
                                                         *ngIf="sel_ser_det.serviceType == 'virtualService'">
@@ -1245,10 +1917,13 @@
                                             </tbody>
                                         </table> -->
 
-                                        <div class="containerAppt textcenter" *ngIf="!theme || theme != 'heartfulness_theme1'">
-                                            <div class="mgn-up-10 no-mgn-bt bold"><span >{{settingsjson.showTokenId?'Token For':'Checkin For'}} :&nbsp;</span>
-                                               
-                                                <span >
+                                        <div class="containerAppt textcenter"
+                                            *ngIf="!theme || theme != 'heartfulness_theme1'">
+                                            <div class="mgn-up-10 no-mgn-bt bold">
+                                                <span>{{settingsjson.showTokenId?'Token For':'Checkin For'}}
+                                                    :&nbsp;</span>
+
+                                                <span>
                                                     <span class="service-icon" style="display: inline-block !important;"
                                                         *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                                         <i class="fa phon-icon"
@@ -1265,8 +1940,9 @@
                                                             *ngIf="sel_ser_det.virtualCallingModes && sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' && sel_ser_det.virtualServiceType ==='videoService'"></i>
                                                     </span>
                                                     <span>{{sel_ser_det.name}}</span>
-                                                </span></div>
-                                            
+                                                </span>
+                                            </div>
+
                                             <!-- <div class="mgn-up-10 no-mgn-bt bold">Date/Time</div> -->
                                             <div class="mgn-bt-5">
                                                 <span *ngIf="!isFuturedate">Today, </span>
@@ -1296,49 +1972,57 @@
                                                             </span>{{serviceTime}}</span>
                                                     </ng-container>
                                                 </span>
-                                            </div> 
+                                            </div>
                                         </div>
-                                         <div >
-       
+                                        <div>
+
                                             <div class="containerpayment "
-                                            *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
-                                            <div class="jaldeecredit"  *ngIf="jcashamount>0" >
-                                                <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)"></mat-checkbox>
-                                                Use Jaldee cash balance : <span class="rupee-font">{{jcashamount| currency:'&#8377;'}}</span>
-                                            </div>
-                                            <div class="creditleft" *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)"> 
-                                                Balance amount can be paid by other payment methods
-                                            </div>
-                                            <div class="prepayment">
-                                                <!-- Payment required now : &nbsp;
+                                                *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
+                                                <div class="jaldeecredit" *ngIf="jcashamount>0">
+                                                    <mat-checkbox [(ngModel)]="checkJcash"
+                                                        (change)="changeJcashUse($event)"></mat-checkbox>
+                                                    Use Jaldee cash balance : <span class="rupee-font">{{jcashamount|
+                                                        currency:'&#8377;'}}</span>
+                                                </div>
+                                                <div class="creditleft"
+                                                    *ngIf="jcashamount>0  && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
+                                                    Balance amount can be paid by other payment methods
+                                                </div>
+                                                <div class="prepayment">
+                                                    <!-- Payment required now : &nbsp;
                                                 <span *ngIf="!checkJcash"class="rupee-font">{{paymentDetails.amountRequiredNow |
                                                     currency:'&#8377;'}}
                                                 </span>
                                                 <span *ngIf="checkJcash" class="rupee-font">{{payAmount |
                                                     currency:'&#8377;'}}
                                                 </span> -->
-                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  [disabled]="paymentBtnDisabled" class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
-                                                    <ng-container
-                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
+                                                    <button type="button" (click)="saveCheckin('checkin')"
+                                                        id="stepThreeConfirmButton" [disabled]="paymentBtnDisabled"
+                                                        class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                        [disabled]="!checkPolicy && heartfulnessAccount">
+                                                        <ng-container
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && 
                                                       ((checkJcash && jcashamount > paymentDetails.amountRequiredNow) || (checkJcash && jcashamount == paymentDetails.amountRequiredNow))">
-                                                     Confirm <span >{{settingsjson.showTokenId?'Token ':'Checkin'}} </span></ng-container>
-                                                <ng-container
-                                                     *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
-                                                     Proceed to pay <span >Rs {{checkJcash ? payAmount : paymentDetails.amountRequiredNow}}</span></ng-container>
-                                                <!-- <ng-container
+                                                            Confirm <span>{{settingsjson.showTokenId?'Token
+                                                                ':'Checkin'}} </span></ng-container>
+                                                        <ng-container
+                                                            *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                                                            Proceed to pay <span>Rs {{checkJcash ? payAmount :
+                                                                paymentDetails.amountRequiredNow}}</span></ng-container>
+                                                        <!-- <ng-container
                                                     *ngIf="paymentLength == 0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)">
                                                     Confirm</ng-container> -->
-                                                </button>
-                                            </div>
-                                            <div class="cancelpolicy  mgn-rt-5"
-                                                *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                <div
-                                                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
-                                                    <a data-toggle="modal" data-target="#exampleModal"
-                                                        class="refund_policy">Cancellation Policy</a>
+                                                    </button>
                                                 </div>
-                                            </div>
-                                            <!-- <div class=""
+                                                <div class="cancelpolicy  mgn-rt-5"
+                                                    *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                    <div
+                                                        *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                                                        <a data-toggle="modal" data-target="#exampleModal"
+                                                            class="refund_policy">Cancellation Policy</a>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class=""
                                                 *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0">
                                                 <div class="select-pay"> Payment option</div>
                                                 <div class="">
@@ -1352,56 +2036,64 @@
                                                 </div>
                                             </div> -->
 
-                                            <!-- modalbox -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog refundpol" role="document">
-                                                    <div class="modal-content">
-                                                        <!-- <div class="modal-header">
+                                                <!-- modalbox -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog refundpol" role="document">
+                                                        <div class="modal-content">
+                                                            <!-- <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <i aria-hidden="true" class="ki ki-close"></i>
                                                             </button>
                                                         </div> -->
-                                                        <div class="modal-body pt-8 pb-0 refund_size">
-                                                            <span>Note:</span> Jaldee is not responsible for the
-                                                            transactions between Consumer and Provider.
-                                                            <ul>
-                                                                <li>Consumers can cancel the booking anytime</li>
-                                                                <li>If the consumer cancels the booking, 3% will be
-                                                                    deducted from the amount(which includes Jaldee
-                                                                    service charges and Online Gateway fees).</li>
-                                                                <li>Refund will be received directly to the consumer’s
-                                                                    bank account after he/she cancels the future
-                                                                    bookings.</li>
-                                                                <li>If the booking is cancelled on the date of booking,
-                                                                    refund will not be processed automatically(i.e
-                                                                    Consumer must inform the provider to initiate the
-                                                                    refund)</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button"
-                                                                class="btn btn-light-primary font-weight-bold"
-                                                                data-dismiss="modal">Close</button>
+                                                            <div class="modal-body pt-8 pb-0 refund_size">
+                                                                <span>Note:</span> Jaldee is not responsible for the
+                                                                transactions between Consumer and Provider.
+                                                                <ul>
+                                                                    <li>Consumers can cancel the booking anytime</li>
+                                                                    <li>If the consumer cancels the booking, 3% will be
+                                                                        deducted from the amount(which includes Jaldee
+                                                                        service charges and Online Gateway fees).</li>
+                                                                    <li>Refund will be received directly to the
+                                                                        consumer’s
+                                                                        bank account after he/she cancels the future
+                                                                        bookings.</li>
+                                                                    <li>If the booking is cancelled on the date of
+                                                                        booking,
+                                                                        refund will not be processed automatically(i.e
+                                                                        Consumer must inform the provider to initiate
+                                                                        the
+                                                                        refund)</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button"
+                                                                    class="btn btn-light-primary font-weight-bold"
+                                                                    data-dismiss="modal">Close</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
                                             </div>
 
+                                            <div class="containerpayment" style="margin:20px;"
+                                                *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
+                                                <div class="prepayment-confirm">
+                                                    <button type="button" (click)="saveCheckin('checkin')"
+                                                        id="stepThreeConfirmButton"
+                                                        class="next-button btn btn-primary font-weight-bold  px-12 py-4"
+                                                        [disabled]="!checkPolicy && heartfulnessAccount">
 
-                                        </div>
+                                                        Confirm <span>{{settingsjson.showTokenId?'Token ':'Checkin'}}
+                                                        </span></button>
 
-                                        <div class="containerpayment" style="margin:20px;" *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
-                                            <div class="prepayment-confirm">
-                                                <button type="button" (click)="saveCheckin('checkin')" id="stepThreeConfirmButton"  class="next-button btn btn-primary font-weight-bold  px-12 py-4" [disabled]="!checkPolicy && heartfulnessAccount">
-                                                    
-                                                     Confirm <span >{{settingsjson.showTokenId?'Token ':'Checkin'}} </span></button>
-                                                
-                                                
+
+                                                </div>
                                             </div>
-                                        </div>
-                                        <!-- <div class="pay-section"
+                                            <!-- <div class="pay-section"
                                             *ngIf="sel_ser_det && sel_ser_det.isPrePayment && paymentLength>0">
                                             <div>
                                                 Service Fee <span class="rupee-font">{{serviceCost |
@@ -1468,14 +2160,15 @@
                                             <div class="t-and-c">
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input type="checkbox" [ngModel]="checkPolicy" [checked]="checkPolicy"
-                                                        (change)="changePolicy($event)">
+                                                        <input type="checkbox" [ngModel]="checkPolicy"
+                                                            [checked]="checkPolicy" (change)="changePolicy($event)">
                                                         <span>I accept the&nbsp;
                                                             <a data-toggle="modal" data-target="#tcModal">Terms and
                                                                 Conditions</a></span>
-                                                    </label>                                                    
+                                                    </label>
                                                 </div>
-                                                <div class="sts-msg error" *ngIf="!checkPolicy">"Agreement to Terms and Conditions is required"</div>
+                                                <div class="sts-msg error" *ngIf="!checkPolicy">"Agreement to Terms and
+                                                    Conditions is required"</div>
                                             </div>
                                             <div class="modal fade" id="tcModal" tabindex="-1" role="dialog"
                                                 aria-labelledby="tcModalLabel" aria-hidden="true">
