@@ -118,8 +118,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         "Malayalam",
         "Tamil",
         "Telugu"
-      ];
-      disableButton;
+    ];
+    disableButton;
 
     server_date;
     api_loading1 = true;
@@ -199,7 +199,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
 
     phoneNumber;
-    consumer_label:any;
+    consumer_label: any;
     separateDialCode = true;
     SearchCountryField = SearchCountryField;
     selectedCountry = CountryISO.India;
@@ -242,7 +242,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     newPhone;
     newEmail;
     newWhatsapp;
-    submitbtndisabled=false;
+    submitbtndisabled = false;
     virtualFields: any;
     whatsappCountryCode;
     disablebutton = false;
@@ -257,7 +257,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     remainingadvanceamount;
     amounttopay: any;
     wallet: any;
-    iseditLanguage=false;
+    iseditLanguage = false;
     languageSelected: any = [];
     payAmount: number;
     constructor(public fed_service: FormMessageDisplayService,
@@ -333,18 +333,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             });
 
 
-             this.age = this.lStorageService.getitemfromLocalStorage('age');
-             this.userId = this.lStorageService.getitemfromLocalStorage('userId');
-             this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-             this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
-             this.getActiveUserInfo().then(data => {
-                this.customer_data = data;
-                this.countryCode = this.customer_data.userProfile.countryCode;
-          
-                this.mandatoryEmail = this.customer_data.userProfile.email;
-                this.createForm();
-                this.getFamilyMember();
-              });
+        this.age = this.lStorageService.getitemfromLocalStorage('age');
+        this.userId = this.lStorageService.getitemfromLocalStorage('userId');
+        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.consumer_label = this.wordProcessor.getTerminologyTerm('customer');
+        this.getActiveUserInfo().then(data => {
+            this.customer_data = data;
+            this.countryCode = this.customer_data.userProfile.countryCode;
+
+            this.mandatoryEmail = this.customer_data.userProfile.email;
+            this.createForm();
+            this.getFamilyMember();
+        });
     }
 
 
@@ -378,7 +378,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
         this.virtualForm.patchValue({ islanguage: 'yes' });
         this.virtualForm.patchValue({ date: 'dd' });
-        this.virtualForm.patchValue({ month:'mm' });
+        this.virtualForm.patchValue({ month: 'mm' });
         this.virtualForm.patchValue({ year: 'yyyy' });
         if (this.dialogData.type !== 'member') {
             this.virtualForm.patchValue({ serviceFor: this.customer_data.id });
@@ -415,176 +415,176 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getActiveUserInfo() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-          _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
-            .subscribe(
-              data => {
-                resolve(data);
-              },
-              () => {
-                reject();
-              }
-            );
+            _this.sharedServices.getProfile(_this.activeUser.id, 'consumer')
+                .subscribe(
+                    data => {
+                        resolve(data);
+                    },
+                    () => {
+                        reject();
+                    }
+                );
         });
-    
-      }
+
+    }
 
 
-      onServiceForChange(event) {
+    onServiceForChange(event) {
         this.serviceFormReset();
-    
+
         this.is_parent = true;
         if (event !== 'new_member') {
-          const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
-          if (chosen_Object.length !== 0) {
+            const chosen_Object = this.familymembers.filter(memberObj => memberObj.user === event);
+            if (chosen_Object.length !== 0) {
+                this.is_parent = false;
+                this.chosen_person = chosen_Object[0]
+                this.setMemberDetails(chosen_Object[0]);
+            } else {
+                this.chosen_person = this.customer_data
+                this.setparentDetails(this.customer_data);
+            }
+        } else {
             this.is_parent = false;
-            this.chosen_person = chosen_Object[0]
-            this.setMemberDetails(chosen_Object[0]);
-          } else {
-            this.chosen_person = this.customer_data
-            this.setparentDetails(this.customer_data);
-          }
-        } else {
-          this.is_parent = false;
-          this.chosen_person = 'new_member'
-    
-        }
-    
-      }
+            this.chosen_person = 'new_member'
 
-      cancelLanguageSelection() {
+        }
+
+    }
+
+    cancelLanguageSelection() {
         if (this.virtualForm.get('preferredLanguage').value.length == 0) {
-          this.virtualForm.get('preferredLanguage').setValue(['English']);
-          this.lngknown = 'yes';
-          this.virtualForm.patchValue({ islanguage: 'yes' });
+            this.virtualForm.get('preferredLanguage').setValue(['English']);
+            this.lngknown = 'yes';
+            this.virtualForm.patchValue({ islanguage: 'yes' });
         } else {
-          this.languageSelected = [];
-    
+            this.languageSelected = [];
+
         }
         this.hideLanguages = true;
         // let elmnt = document.getElementById("plng");
         // elmnt.scrollIntoView();
-      }
+    }
 
-      saveLanguages() {
+    saveLanguages() {
         if (this.lngknown === 'yes') {
-          this.virtualForm.get('preferredLanguage').setValue(['English']);
-          this.hideLanguages = true;
-          this.languageSelected = [];
-          this.iseditLanguage=false;
+            this.virtualForm.get('preferredLanguage').setValue(['English']);
+            this.hideLanguages = true;
+            this.languageSelected = [];
+            this.iseditLanguage = false;
         }
-      else{
-        this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
-        if (this.virtualForm.get('preferredLanguage').value.length === 0) {
-          this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
-          return false;
+        else {
+            this.virtualForm.patchValue({ 'preferredLanguage': this.languageSelected });
+            if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+                this.snackbarService.openSnackBar('Please select one', { 'panelClass': 'snackbarerror' });
+                return false;
+            }
+            this.hideLanguages = true;
+            this.languageSelected = [];
+            // let elmnt = document.getElementById("plng");
+            // elmnt.scrollIntoView()
         }
-        this.hideLanguages = true;
-        this.languageSelected = [];
-        // let elmnt = document.getElementById("plng");
-        // elmnt.scrollIntoView()
-      }
     }
 
 
-      editLanguage() {
-        this.iseditLanguage=true;
+    editLanguage() {
+        this.iseditLanguage = true;
         this.languageSelected = this.virtualForm.get('preferredLanguage').value.slice();
         this.hideLanguages = false;
-      }
-      checklangExists(lang) {
+    }
+    checklangExists(lang) {
         if (this.languageSelected.length > 0) {
-          const existindx = this.languageSelected.indexOf(lang);
-          if (existindx !== -1) {
-            return true;
-          }
+            const existindx = this.languageSelected.indexOf(lang);
+            if (existindx !== -1) {
+                return true;
+            }
         } else {
-          return false;
+            return false;
         }
-      }
+    }
 
-      langSel(sel) {
+    langSel(sel) {
 
         if (this.languageSelected.length > 0) {
-          const existindx = this.languageSelected.indexOf(sel);
-          if (existindx === -1) {
+            const existindx = this.languageSelected.indexOf(sel);
+            if (existindx === -1) {
+                this.languageSelected.push(sel);
+            } else {
+                this.languageSelected.splice(existindx, 1);
+            }
+        } else {
             this.languageSelected.push(sel);
-          } else {
-            this.languageSelected.splice(existindx, 1);
-          }
-        } else {
-          this.languageSelected.push(sel);
         }
-    
-      }
-      onChange(event) {
+
+    }
+    onChange(event) {
         this.lngknown = event.value
         if (this.lngknown === 'yes') {
-          this.virtualForm.get('preferredLanguage').setValue(['English']);
+            this.virtualForm.get('preferredLanguage').setValue(['English']);
         }
         if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length === 0) {
-          this.hideLanguages = false;
+            this.hideLanguages = false;
         }
         if (this.lngknown === 'no' && this.virtualForm.get('preferredLanguage').value.length > 0 && this.virtualForm.get('preferredLanguage').value[0] === 'English') {
-          this.virtualForm.get('preferredLanguage').setValue([]);
-          this.hideLanguages = false;
+            this.virtualForm.get('preferredLanguage').setValue([]);
+            this.hideLanguages = false;
         }
-      }
+    }
 
 
-      fetchLocationByPincode(pincode) {
+    fetchLocationByPincode(pincode) {
         const _this = this;
         return new Promise(function (resolve, reject) {
-          _this.sharedServices.getLocationsByPincode(pincode).subscribe(
-            (locations: any) => {
-              resolve(locations);
-            },
-            error => {
-              resolve([]);
-            }
-          );
+            _this.sharedServices.getLocationsByPincode(pincode).subscribe(
+                (locations: any) => {
+                    resolve(locations);
+                },
+                error => {
+                    resolve([]);
+                }
+            );
         });
-      }
+    }
 
-      showLocations(event) {
+    showLocations(event) {
         let pincode = this.virtualForm.get('pincode').value;
         if (pincode.length === 6) {
-          this.loading = true;
-          this.fetchLocationByPincode(pincode).then(
-            (locations: any) => {
-              if (locations.length > 0) {
-                this.locations = locations[0];
-                this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
-              } else {
-                this.locations = [];
-              }
-              this.loading = false;
-            }
-          )
+            this.loading = true;
+            this.fetchLocationByPincode(pincode).then(
+                (locations: any) => {
+                    if (locations.length > 0) {
+                        this.locations = locations[0];
+                        this.virtualForm.patchValue({ location: locations[0]['PostOffice'][0] });
+                    } else {
+                        this.locations = [];
+                    }
+                    this.loading = false;
+                }
+            )
         } else {
-          this.locations = [];
+            this.locations = [];
         }
-      }
+    }
 
 
-      getFamilyMember() {
+    getFamilyMember() {
         this.api_loading1 = true;
         let fn;
         fn = this.sharedServices.getConsumerFamilyMembers();
         this.subs.sink = fn.subscribe(data => {
-          this.familymembers = [];
-          for (const mem of data) {
-            this.familymembers.push(mem);
-          }
-          if (this.dialogData.id) {
-            this.virtualForm.patchValue({ 'serviceFor': this.dialogData.id });
-            this.onServiceForChange(this.dialogData.id);
-          }
-          this.api_loading1 = false;
-        },
-          () => {
+            this.familymembers = [];
+            for (const mem of data) {
+                this.familymembers.push(mem);
+            }
+            if (this.dialogData.id) {
+                this.virtualForm.patchValue({ 'serviceFor': this.dialogData.id });
+                this.onServiceForChange(this.dialogData.id);
+            }
             this.api_loading1 = false;
-          });
-      }
+        },
+            () => {
+                this.api_loading1 = false;
+            });
+    }
 
 
     setparentDetails(customer) {
@@ -754,38 +754,38 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     validateFields() {
         let isinvalid = false;
         if (this.countryCode === '+91') {
-          if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
-            isinvalid = true;
-          }
+            if (this.virtualForm.get('pincode').value === '' || this.virtualForm.get('pincode').value.length !== 6) {
+                isinvalid = true;
+            }
         }
         if (this.countryCode !== '+91') {
-          if (this.virtualForm.get('localarea').value === ''||this.virtualForm.get('state').value==='') {
-            isinvalid = true;
-            
-          }
+            if (this.virtualForm.get('localarea').value === '' || this.virtualForm.get('state').value === '') {
+                isinvalid = true;
+
+            }
         }
         if (this.virtualForm.get('gender').value === '') {
-          isinvalid = true;
+            isinvalid = true;
         }
         if (this.virtualForm.get('age').value === '') {
-          isinvalid = true;
+            isinvalid = true;
         }
-    
+
         if (this.virtualForm.get('islanguage').value === 'no') {
-          if (this.virtualForm.get('preferredLanguage').value.length === 0) {
-            isinvalid = true;
-          }
+            if (this.virtualForm.get('preferredLanguage').value.length === 0) {
+                isinvalid = true;
+            }
         }
-       
+
         if (this.virtualForm.get('serviceFor').value === 'new_member') {
-    
-          if (this.virtualForm.get('firstName').value == '') {
-            isinvalid = true;
-          }
-          if (this.virtualForm.get('lastName').value == '') {
-            isinvalid = true;
-    
-          }
+
+            if (this.virtualForm.get('firstName').value == '') {
+                isinvalid = true;
+            }
+            if (this.virtualForm.get('lastName').value == '') {
+                isinvalid = true;
+
+            }
         }
         // if (this.virtualForm.get('date').value === 'dd') {
         //   isinvalid = true;
@@ -796,180 +796,180 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         // if (this.virtualForm.get('year').value === 'yyyy') {
         //   isinvalid = true;
         // }
-    
+
         return isinvalid;
-      }
+    }
 
 
 
-      updateParentInfo(formdata) {
+    updateParentInfo(formdata) {
 
         const _this = this;
         const firstName = _this.customer_data.userProfile.firstName
         const lastName = _this.customer_data.userProfile.lastName;
         return new Promise(function (resolve, reject) {
-          const userObj = {};
-          userObj['id'] = _this.customer_data.id;
-          if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
-            const whatsup = {}
-            if (formdata.countryCode_whtsap.startsWith('+')) {
-              whatsup["countryCode"] = formdata.countryCode_whtsap
+            const userObj = {};
+            userObj['id'] = _this.customer_data.id;
+            if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
+                const whatsup = {}
+                if (formdata.countryCode_whtsap.startsWith('+')) {
+                    whatsup["countryCode"] = formdata.countryCode_whtsap
+                } else {
+                    whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+                }
+                whatsup["number"] = formdata.whatsappnumber
+                userObj['whatsAppNum'] = whatsup;
+            }
+
+            if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
+                const telegram = {}
+                if (formdata.countryCode_telegram.startsWith('+')) {
+                    telegram["countryCode"] = formdata.countryCode_telegram
+                } else {
+                    telegram["countryCode"] = '+' + formdata.countryCode_telegram
+                }
+                telegram["number"] = formdata.telegramnumber
+                userObj['telegramNum'] = telegram;
+            }
+
+
+            if (formdata.email !== '' && formdata.updateEmail) {
+                userObj['email'] = formdata.email
+            }
+            userObj['gender'] = formdata.gender;
+            userObj['firstName'] = firstName;
+            userObj['lastName'] = lastName;
+            // userObj['dob'] = formdata.dob;
+            userObj['pinCode'] = formdata.pincode;
+            if (formdata.islanguage === 'yes') {
+                userObj['preferredLanguages'] = ['English'];
             } else {
-              whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+                userObj['preferredLanguages'] = formdata.preferredLanguage;
             }
-            whatsup["number"] = formdata.whatsappnumber
-            userObj['whatsAppNum'] = whatsup;
-          }
-      
-          if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
-            const telegram = {}
-            if (formdata.countryCode_telegram.startsWith('+')) {
-              telegram["countryCode"] = formdata.countryCode_telegram
-            } else {
-              telegram["countryCode"] = '+' + formdata.countryCode_telegram
+            userObj['bookingLocation'] = {}
+            if (_this.countryCode !== '+91' && formdata.localarea !== '') {
+                userObj['bookingLocation']['district'] = formdata.localarea;
+                userObj['city'] = formdata.localarea;
             }
-            telegram["number"] = formdata.telegramnumber
-            userObj['telegramNum'] = telegram;
-          }
-       
-          
-          if (formdata.email !== ''&& formdata.updateEmail) {
-            userObj['email'] = formdata.email
-          }
-          userObj['gender'] = formdata.gender;
-          userObj['firstName'] = firstName;
-          userObj['lastName'] = lastName;
-          // userObj['dob'] = formdata.dob;
-          userObj['pinCode'] = formdata.pincode;
-          if (formdata.islanguage === 'yes') {
-            userObj['preferredLanguages'] = ['English'];
-          } else {
-            userObj['preferredLanguages'] = formdata.preferredLanguage;
-          }
-          userObj['bookingLocation']= {}
-          if (_this.countryCode!=='+91'&&formdata.localarea!=='') {
-            userObj['bookingLocation']['district'] = formdata.localarea;
-            userObj['city']=formdata.localarea;
-          }
-          if (_this.countryCode!=='+91'&&formdata.state ) {
-            userObj['bookingLocation']['state'] = formdata.state;
-            userObj['state'] = formdata.state;
-          }
-          _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
-          _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
-            () => {
-    
-              resolve(true);
-            }, (error) => {
-              _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              resolve(false);
+            if (_this.countryCode !== '+91' && formdata.state) {
+                userObj['bookingLocation']['state'] = formdata.state;
+                userObj['state'] = formdata.state;
             }
-          )
+            _this.lStorageService.setitemonLocalStorage('userId', _this.customer_data.id);
+            _this.sharedServices.updateProfile(userObj, 'consumer').subscribe(
+                () => {
+
+                    resolve(true);
+                }, (error) => {
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                }
+            )
         });
-      }
+    }
 
     onSubmit(formdata) {
         this.submitbtndisabled = true;
         formdata['phoneno'] = this.customer_data.userProfile.primaryMobileNo;
-         if(this.virtualForm.controls.email.invalid){
-           return false;
-         }
-        if (this.validateFields() === true) {
-          this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
-        } else if(formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0){
-          this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
-        } else if(formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0){
-          this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
-        } else  {
-    
-          if (this.is_parent) {
-            this.updateParentInfo(formdata).then(
-              (result) => {
-                if (result !== false) {
-                  this.lStorageService.setitemonLocalStorage('age', formdata.age);
-                  this.submitbtndisabled = false;
-                 // this.dialogRef.close(formdata);
-                }
-              },
-              (error) => {
-                this.submitbtndisabled = false;
-                return false;
-              }
-            );
-          } else {
-            if (formdata.serviceFor === 'new_member') {
-              this.saveMember(formdata).then(data => {
-                if (data !== false) {
-                  this.lStorageService.setitemonLocalStorage('age', formdata.age);
-                  formdata['newMemberId'] = data;
-                  this.submitbtndisabled = false;
-                  //this.dialogRef.close(formdata);
-                }
-              },
-                () => {
-                  this.submitbtndisabled = false;
-                  return false;
-                })
-            } else {
-              this.updateMemberInfo(formdata).then(
-                (data) => {
-                  if (data !== false) {
-                    this.submitbtndisabled = false;
-                    this.lStorageService.setitemonLocalStorage('age', formdata.age);
-                   // this.dialogRef.close(formdata);
-                  }
-                },
-                () => {
-                  this.submitbtndisabled = false;
-                  return false;
-                }
-              );
-            }
-    
-    
-          
-        
-    
+        if (this.virtualForm.controls.email.invalid) {
+            return false;
         }
-      }
-    
-    
-    
-      }
+        if (this.validateFields() === true) {
+            this.snackbarService.openSnackBar('Please fill  all required fields', { 'panelClass': 'snackbarerror' });
+        } else if (formdata.countryCode_whtsap.trim().length === 0 && formdata.whatsappnumber.trim().length > 0) {
+            this.snackbarService.openSnackBar('Please fill whatsapp countrycode', { 'panelClass': 'snackbarerror' });
+        } else if (formdata.countryCode_telegram.trim().length === 0 && formdata.telegramnumber.trim().length > 0) {
+            this.snackbarService.openSnackBar('Please fill telegram countrycode', { 'panelClass': 'snackbarerror' });
+        } else {
 
-      updateMemberInfo(formdata) {
-   
+            if (this.is_parent) {
+                this.updateParentInfo(formdata).then(
+                    (result) => {
+                        if (result !== false) {
+                            this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                            this.submitbtndisabled = false;
+                            // this.dialogRef.close(formdata);
+                        }
+                    },
+                    (error) => {
+                        this.submitbtndisabled = false;
+                        return false;
+                    }
+                );
+            } else {
+                if (formdata.serviceFor === 'new_member') {
+                    this.saveMember(formdata).then(data => {
+                        if (data !== false) {
+                            this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                            formdata['newMemberId'] = data;
+                            this.submitbtndisabled = false;
+                            //this.dialogRef.close(formdata);
+                        }
+                    },
+                        () => {
+                            this.submitbtndisabled = false;
+                            return false;
+                        })
+                } else {
+                    this.updateMemberInfo(formdata).then(
+                        (data) => {
+                            if (data !== false) {
+                                this.submitbtndisabled = false;
+                                this.lStorageService.setitemonLocalStorage('age', formdata.age);
+                                // this.dialogRef.close(formdata);
+                            }
+                        },
+                        () => {
+                            this.submitbtndisabled = false;
+                            return false;
+                        }
+                    );
+                }
+
+
+
+
+
+            }
+        }
+
+
+
+    }
+
+    updateMemberInfo(formdata) {
+
         const _this = this;;
         const firstName = _this.chosen_person.userProfile.firstName;
         const lastName = _this.chosen_person.userProfile.lastName;
         let memberInfo: any = {};
         memberInfo.userProfile = {}
-        if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
-          const whatsup = {}
-          if (formdata.countryCode_whtsap.startsWith('+')) {
-            whatsup["countryCode"] = formdata.countryCode_whtsap
-          } else {
-            whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
-          }
-          whatsup["number"] = formdata.whatsappnumber
-          memberInfo.userProfile['whatsAppNum'] = whatsup;
+        if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
+            const whatsup = {}
+            if (formdata.countryCode_whtsap.startsWith('+')) {
+                whatsup["countryCode"] = formdata.countryCode_whtsap
+            } else {
+                whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+            }
+            whatsup["number"] = formdata.whatsappnumber
+            memberInfo.userProfile['whatsAppNum'] = whatsup;
         }
-        if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
-          const telegram = {}
-          if (formdata.countryCode_telegram.startsWith('+')) {
-            telegram["countryCode"] = formdata.countryCode_telegram
-          } else {
-            telegram["countryCode"] = '+' + formdata.countryCode_telegram
-          }
-          telegram["number"] = formdata.telegramnumber
-          memberInfo.userProfile['telegramNum'] = telegram;
-    
+        if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
+            const telegram = {}
+            if (formdata.countryCode_telegram.startsWith('+')) {
+                telegram["countryCode"] = formdata.countryCode_telegram
+            } else {
+                telegram["countryCode"] = '+' + formdata.countryCode_telegram
+            }
+            telegram["number"] = formdata.telegramnumber
+            memberInfo.userProfile['telegramNum'] = telegram;
+
         }
         if (formdata.email !== '' && formdata.updateEmail) {
-          memberInfo['userProfile']['email'] = formdata.email
+            memberInfo['userProfile']['email'] = formdata.email
         }
-    
-    
+
+
         memberInfo.bookingLocation = {}
         memberInfo.userProfile['id'] = formdata.serviceFor;
         memberInfo.userProfile['gender'] = formdata.gender;
@@ -978,64 +978,64 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         // memberInfo.userProfile['dob'] = formdata.dob;
         memberInfo.bookingLocation['pincode'] = formdata.pincode;
         if (formdata.islanguage === 'yes') {
-          memberInfo['preferredLanguages'] = ['English'];
+            memberInfo['preferredLanguages'] = ['English'];
         } else {
-          memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+            memberInfo['preferredLanguages'] = formdata.preferredLanguage;
         }
-        if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
-          memberInfo['bookingLocation']['district'] = formdata.localarea;
+        if (this.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
+            memberInfo['bookingLocation']['district'] = formdata.localarea;
         }
-        if (this.countryCode!=='+91'&&formdata.state ) {
-          memberInfo['bookingLocation']['state'] = formdata.state;
+        if (this.countryCode !== '+91' && formdata.state) {
+            memberInfo['bookingLocation']['state'] = formdata.state;
         }
         this.lStorageService.setitemonLocalStorage('userId', formdata.serviceFor);
         return new Promise(function (resolve, reject) {
-          _this.sharedServices.editMember(memberInfo).subscribe(
-            () => {
-              resolve(true);
-            }, (error) => {
-              _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              resolve(false);
-            }
-          )
+            _this.sharedServices.editMember(memberInfo).subscribe(
+                () => {
+                    resolve(true);
+                }, (error) => {
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                }
+            )
         });
-    
-    
-    
-      }
 
 
-      saveMember(formdata) {
+
+    }
+
+
+    saveMember(formdata) {
         const _this = this;
         const memberInfo = {};
         memberInfo['userProfile'] = {}
-        if (  formdata.whatsappnumber !== undefined &&formdata.whatsappnumber.trim().length>0  && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length>0) {
-    
-          const whatsup = {}
-          if (formdata.countryCode_whtsap.startsWith('+')) {
-            whatsup["countryCode"] = formdata.countryCode_whtsap
-          } else {
-            whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
-          }
-          whatsup["number"] = formdata.whatsappumber
-          memberInfo['userProfile']['whatsAppNum'] = whatsup;
+        if (formdata.whatsappnumber !== undefined && formdata.whatsappnumber.trim().length > 0 && formdata.countryCode_whtsap !== undefined && formdata.countryCode_whtsap.trim().length > 0) {
+
+            const whatsup = {}
+            if (formdata.countryCode_whtsap.startsWith('+')) {
+                whatsup["countryCode"] = formdata.countryCode_whtsap
+            } else {
+                whatsup["countryCode"] = '+' + formdata.countryCode_whtsap
+            }
+            whatsup["number"] = formdata.whatsappumber
+            memberInfo['userProfile']['whatsAppNum'] = whatsup;
         }
-        if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length>0 &&  formdata.countryCode_telegram !== undefined&&formdata.countryCode_telegram.trim().length>0) {
-          const telegram = {}
-          if (formdata.countryCode_telegram.startsWith('+')) {
+        if (formdata.telegramnumber !== undefined && formdata.telegramnumber.trim().length > 0 && formdata.countryCode_telegram !== undefined && formdata.countryCode_telegram.trim().length > 0) {
+            const telegram = {}
+            if (formdata.countryCode_telegram.startsWith('+')) {
+                telegram["countryCode"] = formdata.countryCode_telegram
+            } else {
+                telegram["countryCode"] = '+' + formdata.countryCode_telegram
+            }
             telegram["countryCode"] = formdata.countryCode_telegram
-          } else {
-            telegram["countryCode"] = '+' + formdata.countryCode_telegram
-          }
-          telegram["countryCode"] = formdata.countryCode_telegram
-          telegram["number"] = formdata.telegramnumber
-          memberInfo['userProfile']['telegramNum'] = telegram;
+            telegram["number"] = formdata.telegramnumber
+            memberInfo['userProfile']['telegramNum'] = telegram;
         }
         if (formdata.email !== '' && formdata.updateEmail) {
-          memberInfo['userProfile']['email'] = formdata.email
+            memberInfo['userProfile']['email'] = formdata.email
         }
-    
-    
+
+
         memberInfo['bookingLocation'] = {}
         memberInfo['userProfile']['gender'] = formdata.gender;
         memberInfo['userProfile']['firstName'] = formdata.firstName;
@@ -1043,38 +1043,38 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         // memberInfo['userProfile']['dob'] = formdata.dob;
         memberInfo['bookingLocation']['pincode'] = formdata.pincode;
         if (formdata.islanguage === 'yes') {
-          memberInfo['preferredLanguages'] = ['English'];
+            memberInfo['preferredLanguages'] = ['English'];
         } else {
-          memberInfo['preferredLanguages'] = formdata.preferredLanguage;
+            memberInfo['preferredLanguages'] = formdata.preferredLanguage;
         }
-    
-        if (this.countryCode!=='+91'&&formdata.localarea && formdata.localarea!=='') {
-          memberInfo['bookingLocation']['district'] = formdata.localarea;
+
+        if (this.countryCode !== '+91' && formdata.localarea && formdata.localarea !== '') {
+            memberInfo['bookingLocation']['district'] = formdata.localarea;
         }
-        if (this.countryCode!=='+91'&&formdata.state ) {
-          memberInfo['bookingLocation']['state'] = formdata.state;
+        if (this.countryCode !== '+91' && formdata.state) {
+            memberInfo['bookingLocation']['state'] = formdata.state;
         }
         return new Promise(function (resolve, reject) {
-          _this.sharedServices.addMembers(memberInfo).subscribe(
-            (data) => {
-              _this.lStorageService.setitemonLocalStorage('userId', data);
-              resolve(data);
-            }, (error) => {
-              _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              resolve(false);
-            }
-          )
+            _this.sharedServices.addMembers(memberInfo).subscribe(
+                (data) => {
+                    _this.lStorageService.setitemonLocalStorage('userId', data);
+                    resolve(data);
+                }, (error) => {
+                    _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                }
+            )
         });
-    
-    
-      }
+
+
+    }
 
     // isNumeric(evt) {
     //     return this.shared_functions.isNumeric(evt);
     //   }
-      isNumericSign(evt) {
+    isNumericSign(evt) {
         return this.shared_functions.isNumericSign(evt);
-      }
+    }
 
     ngOnInit() {
         const _this = this;
@@ -2972,21 +2972,27 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     goToStep(type) {
         if (type === 'next') {
-            if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
-                if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    if (this.bookStep === 3) {
-                        this.validateQuestionnaire();
-                    } else {
-                        this.bookStep++;
-                    }
-                } else {
-                    if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
-                        this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
-                    } else {
-                        this.bookStep = 3;
-                    }
-                }
+
+            if (this.bookStep === 3) {
+                this.validateQuestionnaire();
+            } else {
+                this.bookStep++;
             }
+            // if (this.queuejson.length !== 0 && !this.api_loading1 && this.waitlist_for.length !== 0) {
+            //     if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            //         if (this.bookStep === 3) {
+            //             this.validateQuestionnaire();
+            //         } else {
+            //             this.bookStep++;
+            //         }
+            //     } else {
+            //         if (this.sel_ser_det.consumerNoteMandatory && this.consumerNote == '') {
+            //             this.snackbarService.openSnackBar('Please provide ' + this.sel_ser_det.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
+            //         } else {
+            //             this.bookStep = 3;
+            //         }
+            //     }
+            // }
         } else if (type === 'prev') {
             if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                 this.bookStep--;

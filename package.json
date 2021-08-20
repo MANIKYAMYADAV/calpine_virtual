@@ -128,7 +128,7 @@
     "protractor": "~7.0.0",
     "resolve-url-loader": "^3.1.0",
     "rxjs-tslint": "^0.1.7",
-    "sass": "^1.37.5",
+    "sass": "^1.38.0",
     "sass-loader": "^8.0.0",
     "ts-node": "~5.0.1",
     "tslint": "~6.1.0",
