@@ -2078,6 +2078,23 @@
 
 
                                             </div>
+                                            <!-- <div *ngIf="type != 'waitlistreschedule'"
+                                            class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between border-top pt-10 width-100 mgn-lt-10 hf-single-btn-container">
+                                            
+                                            <button type="button"
+                                            class="next-button btn btn-light-primary font-weight-bold text-uppercase px-9 py-4"
+                                            (click)="goToStep('prev')">
+                                            Go Back
+                                            </button>
+                                            <button type="button"
+                                                class="next-button btn btn-primary font-weight-bold text-uppercase px-9 py-4"
+                                                (click)="goToStep('next')"
+                                                [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1) || waitlist_for.length == 0">
+                                                Next
+                                            </button>
+                                        </div> -->
+                                        
+
 
                                             <div class="containerpayment" style="margin:20px;"
                                                 *ngIf="sel_ser_det && sel_ser_det.isPrePayment==false && paymentLength==0|| (paymentDetails && paymentDetails.amountRequiredNow == 0)">
