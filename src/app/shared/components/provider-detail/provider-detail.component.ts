@@ -1689,7 +1689,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
 
 
-      } else {
+      } 
+      else {
         this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer');
       }
 

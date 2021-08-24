@@ -134,9 +134,9 @@
                                     <div class="lbl col-sm-12 col-md-7 col-lg-8 col-xs-12 col-sm-12 no-padding right-part"
                                         data-wizard-type="step-content" data-wizard-state="current"
                                         *ngIf="bookStep === 1">
-                                        <div class="panel-body no-padding">
+                                        <div class="panel-body no-padding" *ngIf="sel_ser_det.serviceType == 'virtualService'">
                                             <div
-                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left">
+                                                class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding pull-right border-left" >
                                                 <div
                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding check-new-group border-tp border-rt">
                                                     <div class="col-md-12 col-xs-12 col-sm-12 no-padding border-bt"
@@ -228,7 +228,7 @@
                                                     class="col-md-12 col-lg-12 col-xs-12 col-sm-12 border-tp border-rt check-new-group pad-rt-0">
                                                     <form [formGroup]="virtualForm"
                                                         class="login-form custom-login-form consumer-join-component virtual-fields"
-                                                        [ngClass]="theme?theme:''" novalidate   *ngIf="sel_ser_det.serviceType == 'virtualService'">
+                                                        [ngClass]="theme?theme:''" novalidate   >
                                                         <!-- <div class="mat-dialog-title">
                                                             <div class="title" style="font-size: 16px !important;">
                                                                 {{consumer_label| capitalizeFirst }} Information </div>
@@ -271,11 +271,15 @@
                                                                                 {{customer_data.userProfile.firstName}}
                                                                                 {{customer_data.userProfile.lastName}}
                                                                             </mat-radio-button>
+                                                                   <ng-container *ngIf="familymembers.length>0">
+                                                                            <!-- {{familymembers.length}} -->
+                                                                            
                                                                             <mat-radio-button [value]="member.user"
                                                                                 *ngFor="let member of familymembers">
                                                                                 {{member.userProfile.firstName}}
                                                                                 {{member.userProfile.lastName}}
                                                                             </mat-radio-button>
+                                                                        </ng-container>
                                                                             <mat-radio-button value="new_member">Someone
                                                                                 else</mat-radio-button>
                                                                         </mat-radio-group>

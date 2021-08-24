@@ -319,7 +319,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.getRescheduleWaitlistDet();
                 }
                 if (params.virtual_info) {
-                    this.virtualInfo = JSON.parse(params.virtual_info);
+                    // this.virtualInfo = JSON.parse(params.virtual_info);
 
                 }
                 if (params.theme) {
@@ -1308,9 +1308,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             const unChangedPhnoCountryCode = this.countryCode.split('+')[1];
                             this.callingModes = unChangedPhnoCountryCode + '' + this.customer_data.primaryPhoneNumber;
                             if (serv.serviceType === 'virtualService' && this.virtualInfo) {
+                                console.log(this.virtualInfo);
+                                console.log("am checking dffkjksdf");
                                 if (this.virtualInfo.countryCode_whtsap && this.virtualInfo.whatsappnumber !== '' && this.virtualInfo.countryCode_whtsap !== undefined && this.virtualInfo.whatsappnumber !== undefined) {
                                     const whtsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
                                     this.callingModes = whtsappcountryCode + '' + this.virtualInfo.whatsappnumber;
+
                                     console.log(this.callingModes);
                                 }
                             }
@@ -1490,6 +1493,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     confirmcheckin(type?) {
+        console.log("Confirm Checkin Called",this.virtualInfo);
         if (type === 'checkin' && this.sel_ser_det.isPrePayment && this.payEmail === '') {
             this.paymentBtnDisabled = true;
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
@@ -1518,13 +1522,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             this.virtualServiceArray = {};
             if (this.callingModes !== '') {
+        
                 this.is_wtsap_empty = false;
                 if (this.sel_ser_det.serviceType === 'virtualService') {
                     if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
                         this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
                     } else {
                         console.log(this.callingModes);
-                        this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                        // this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.callingModes;
+                        const whatsappcountryCode = this.virtualInfo.countryCode_whtsap.split('+')[1];
+
+                        this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] =whatsappcountryCode +''+ this.virtualInfo.whatsappnumber
                     }
                 }
             } else if (this.callingModes === '' || this.callingModes.length < 10) {
@@ -1558,6 +1566,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 'coupons': this.selected_coupons
             };
             if (this.sel_ser_det.serviceType === 'virtualService') {
+               // this.virtualServiceArray = this.virtualForm;
                 for (const i in this.virtualServiceArray) {
                     if (i === 'WhatsApp') {
                         post_Data['virtualService'] = this.virtualServiceArray;
@@ -1590,6 +1599,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 //     }
 
                 // }
+                console.log(this.virtualInfo);
+                console.log(this.virtualInfo.value)
+                console.log(this.virtualInfo.age)
                 if (this.virtualInfo) {
                     // console.log(this.virtualInfo);
                     // const momentDate = new Date(this.virtualInfo.dob); // Replace event.value with your date value
@@ -1598,7 +1610,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     // this.waitlist_for[0]['dob'] = formattedDate;
                     this.waitlist_for[0]['whatsAppNum'] = {
                         'countryCode': this.virtualInfo.countryCode_whtsap,
-                        'number': this.virtualInfo.whatsappnumber
+                        'number': this.virtualInfo.whatsappnumber    
                     }
                     this.waitlist_for[0]['telegramNum'] = {
                         'countryCode': this.virtualInfo.countryCode_telegram,
@@ -2971,6 +2983,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
     }
     goToStep(type) {
+        //this.createForm();
+        console.log("Patient Information :",this.virtualForm.value);
+        this.virtualInfo = this.virtualForm.value;
+
+        console.log("Virtual Info : ",this.virtualInfo);
         if (type === 'next') {
 
             if (this.bookStep === 3) {
